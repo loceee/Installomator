@@ -8,8 +8,8 @@
 # inspired by the download scripts from William Smith and Sander Schram
 # with additional ideas and contribution from Isaac Ordonez, Mann consulting
 
-VERSION='0.2'
-VERSIONDATE='20200529'
+VERSION='0.3'
+VERSIONDATE='20200609'
 
 export PATH=/usr/bin:/bin:/usr/sbin:/sbin
 
@@ -679,7 +679,15 @@ case $label in
         downloadURL="https://updates.cdn-apple.com/2019/cert/061-41823-20191025-5efc5a59-d7dc-46d3-9096-396bb8cb4a73/SwiftRuntimeForCommandLineTools.dmg"
         expectedTeamID="Software Update"
         ;;
-
+    sketch)
+        name="Sketch"
+        type="zip"
+        downloadURL=$(curl -sf "https://www.sketch.com/get/" \
+          | grep -o '<a class="download" href=['"'"'"][^"'"'"']*['"'"'"]' \
+          | sed -e 's/^<a class="download" href=["'"'"']//' -e 's/["'"'"']$//' \
+          | uniq)
+        expectedTeamID="WUGMZZ5K46"
+        ;;
 
 #    Note: Packages is signed but _not_ notarized, so spctl will reject it
 #    packages)
