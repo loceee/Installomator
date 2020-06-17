@@ -683,9 +683,8 @@ case $label in
         name="Sketch"
         type="zip"
         downloadURL=$(curl -sf "https://www.sketch.com/get/" \
-          | grep -o '<a class="download" href=['"'"'"][^"'"'"']*['"'"'"]' \
-          | sed -e 's/^<a class="download" href=["'"'"']//' -e 's/["'"'"']$//' \
-          | uniq)
+          | xpath '//rss/channel/item[1]/enclosure/@url' 2>/dev/null \
+          | cut -d '"' -f 2)
         expectedTeamID="WUGMZZ5K46"
         ;;
 
